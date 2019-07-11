@@ -8,37 +8,31 @@ public class Kirby : MonoBehaviour
     public static Kirby Instance { get => (instance) ? instance : GameObject.FindObjectOfType<Kirby>(); }
 
     private Animator myAnimator;
+    public float MovementSpeed { get; set; }
 
-    private float movementSpeed = 1.0f;
+    public float walkSpeed;
 
-    [SerializeField]
-    private float walkSpeed = 1.0f;
+    public float runSpeed;
 
-    [SerializeField]
-    private float runSpeed = 1.0f;
+    public float flySpeed;
+
+    public float flyMaxRange;
 
     private bool facingRight;
 
     [SerializeField]
-    private Transform[] groundPoints;
-
-    [SerializeField]
-    private float groundRadius;
-
-    [SerializeField]
     private bool airControl;
 
-    [SerializeField]
-    private float jumpForce;
+    public float jumpForce;
 
-    public Rigidbody2D MyRigidbody;
+    public Rigidbody2D MyRigidbody { get; set; }
 
     public bool Absorb { get; set; }
     public bool Run { get; set; }
     public bool Jump { get; set; }
     public bool OnGround { get; set; }
-
-    private float distance;
+    public bool Fly { get; set; }
+    public float Distance { get; set; }
 
     const int airLayer = 1;
 
@@ -51,13 +45,15 @@ public class Kirby : MonoBehaviour
         "Sword"
     };
 
+    private float currentY;
+
     // Start is called before the first frame update
     void Start()
     {
         facingRight = true;
         MyRigidbody = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();
-        movementSpeed = walkSpeed;
+        MovementSpeed = walkSpeed;
     }
 
     void Update()
@@ -77,7 +73,6 @@ public class Kirby : MonoBehaviour
             float horizontal = Input.GetAxis("Horizontal");
             HandleMovement(horizontal);
             Flip(horizontal);
-            HandleAttack();
             HandleLayers();
             ResetValues();
         }
@@ -86,36 +81,48 @@ public class Kirby : MonoBehaviour
     private void HandleInput()
     {
         //Jump
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (OnGround && Input.GetKeyDown(KeyCode.Space))
         {
-            //jump = true;
+            myAnimator.SetTrigger("jump");
+        }
+        //Fly
+        if (Jump && Input.GetKeyDown(KeyCode.Space))
+        {
+            currentY = transform.position.y;
+            myAnimator.SetTrigger("fly");
+            myAnimator.SetBool("flying", true);
+        }
+        if (Fly && Input.GetKeyDown(KeyCode.Space))
+        {
+            myAnimator.SetBool("flying", true);
+            if ((transform.position.y-currentY) < flyMaxRange)
+            {
+                MyRigidbody.AddForce(new Vector2(0, flySpeed));
+            }
         }
         //Absorb
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
-            //absorb = true;
+            myAnimator.SetTrigger("absorb");
+            myAnimator.SetBool("absorbing", true);
         }
         if (Input.GetKeyUp(KeyCode.LeftControl))
         {
-            //absorb = false;
             myAnimator.SetBool("absorbing", false);
         }
     }
 
     private void ResetValues()
     {
-        //jump = false;
         if (Mathf.Abs(Input.GetAxis("Horizontal")) < 0.01)
         {
-            distance = 0;
-            myAnimator.SetFloat("run", distance);
-            movementSpeed = walkSpeed;
+            Distance = 0;
         }
     }
 
     private void HandleMovement(float horizontal)
     {
-        if (MyRigidbody.velocity.y < 0 && !OnGround)
+        if (MyRigidbody.velocity.y < 0 && !OnGround && !Fly)
         {
             myAnimator.SetBool("land", true);
         }
@@ -124,21 +131,23 @@ public class Kirby : MonoBehaviour
             myAnimator.SetBool("land", false);
         }
 
-        if (Jump && MyRigidbody.velocity.y == 0)
+        if (OnGround && Distance > 70.0f)
         {
-            MyRigidbody.AddForce(new Vector2(0, jumpForce));
-            //myAnimator.SetTrigger("jump");
+            myAnimator.SetBool("run", true);
+        }
+        else
+        {
+            myAnimator.SetBool("run", false);
+        }
+        if (OnGround)
+        {
+            myAnimator.SetBool("flying", false);
+            Fly = false;
         }
 
-        if (OnGround && distance > 70.0f)
+        if (!Absorb && (OnGround || airControl))
         {
-            myAnimator.SetFloat("run", distance);
-            movementSpeed = runSpeed;
-        }
-
-        if (!Absorb && OnGround)
-        {
-            MyRigidbody.AddForce(new Vector2(horizontal * movementSpeed, 0));
+            MyRigidbody.AddForce(new Vector2(horizontal * MovementSpeed, 0));
             HandleRun(horizontal);
         }
         myAnimator.SetFloat("speed", Mathf.Abs(horizontal));
@@ -146,23 +155,9 @@ public class Kirby : MonoBehaviour
 
     private void HandleRun(float horizontal)
     {
-        if (OnGround && !isAbsorbing())
+        if (OnGround)
         {
-            distance = Mathf.Min(distance + Mathf.Abs(horizontal), 75.0f);
-        }
-    }
-
-    private bool isAbsorbing()
-    {
-        return this.myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Absorb") || this.myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Absorbing");
-    }
-
-    private void HandleAttack()
-    {
-        if (Absorb && !isAbsorbing())
-        {
-            myAnimator.SetTrigger("absorb");
-            myAnimator.SetBool("absorbing", true);
+            Distance = Mathf.Min(Distance + Mathf.Abs(horizontal), 75.0f);
         }
     }
 
