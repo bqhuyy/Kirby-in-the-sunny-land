@@ -47,6 +47,11 @@ public class Kirby : MonoBehaviour
 
     private float currentY;
 
+    [SerializeField]
+    private GameObject breathPrefab;
+
+    private bool stopFlying = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -100,6 +105,10 @@ public class Kirby : MonoBehaviour
                 MyRigidbody.AddForce(new Vector2(0, flySpeed));
             }
         }
+        if (Fly && (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)))
+        {
+            StopFlying();
+        }
         //Absorb
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
@@ -139,10 +148,9 @@ public class Kirby : MonoBehaviour
         {
             myAnimator.SetBool("run", false);
         }
-        if (OnGround)
+        if (Fly && OnGround)
         {
-            myAnimator.SetBool("flying", false);
-            Fly = false;
+            StopFlying();
         }
 
         if (!Absorb && (OnGround || airControl))
@@ -192,5 +200,26 @@ public class Kirby : MonoBehaviour
                 new Vector2(transform.position.x + 0.5f, transform.position.y - 0.51f),
                 groundLayers
             );
+    }
+
+    public void Breath(int value)
+    {
+        GameObject tmp = (GameObject)Instantiate(breathPrefab, transform.position, Quaternion.identity);
+        if (facingRight)
+        {
+            tmp.GetComponent<Breath>().Initialize(Vector2.right);
+        }
+        else
+        {
+            tmp.GetComponent<Breath>().Initialize(Vector2.left);
+        }
+    }
+
+    private void StopFlying()
+    {
+        MyRigidbody.velocity = new Vector2(MyRigidbody.velocity.x, 0);
+        Fly = false;
+        myAnimator.SetBool("flying", false);
+        Breath(0);
     }
 }

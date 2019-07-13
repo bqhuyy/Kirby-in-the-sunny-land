@@ -1823,6 +1823,8 @@ MonoBehaviour:
   groundLayers:
     serializedVersion: 2
     m_Bits: 256
+  breathPrefab: {fileID: 6212631023364022550, guid: 93e7a740dbe6ae54493011dbccd7bc43,
+    type: 3}
 --- !u!1 &1631333906
 GameObject:
   m_ObjectHideFlags: 0
