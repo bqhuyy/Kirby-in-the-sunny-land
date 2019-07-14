@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 8285654492290413320}
   - component: {fileID: 8751233235907130964}
   - component: {fileID: 3498152327551281839}
-  - component: {fileID: 1203327059283870020}
+  - component: {fileID: 102149038341916677}
   m_Layer: 0
   m_Name: SwordShoot
-  m_TagString: EnemyShoot
+  m_TagString: EnemyAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -138,8 +138,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   maxDistance: 3
---- !u!60 &1203327059283870020
-PolygonCollider2D:
+--- !u!68 &102149038341916677
+EdgeCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -152,18 +152,16 @@ PolygonCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.07, y: 0.07}
-    newSize: {x: 0.07, y: 0.07}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_EdgeRadius: 0
   m_Points:
-    m_Paths:
-    - - {x: -0.035, y: 0.035}
-      - {x: -0.035, y: -0.035}
-      - {x: 0.035, y: -0.035}
-      - {x: 0.035, y: 0.035}
+  - {x: 0.16120751, y: -0.1294769}
+  - {x: -0.0039146943, y: -0.13016272}
+  - {x: -0.12950653, y: -0.06641252}
+  - {x: -0.15922537, y: -0.023962993}
+  - {x: -0.16159916, y: 0.02264306}
+  - {x: -0.1216169, y: 0.07100716}
+  - {x: -0.062429767, y: 0.10341339}
+  - {x: 0.012068197, y: 0.13182238}
+  - {x: 0.092643365, y: 0.13291602}
+  - {x: 0.16229665, y: 0.12478738}
+  - {x: 0.16111568, y: -0.12918547}

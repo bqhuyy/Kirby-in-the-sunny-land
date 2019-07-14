@@ -39,6 +39,31 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private GameObject breathPrefab;
 
+    [SerializeField]
+    private List<string> damageSources;
+
+    [SerializeField]
+    private float attackRange;
+
+    public bool InRange
+    {
+        get
+        {
+            if (Target != null)
+            {
+                return Vector2.Distance(transform.position, Target.transform.position) <= attackRange;
+            }
+            return false;
+        }
+    }
+    public bool IsTargetDead
+    {
+        get
+        {
+            return Kirby.Instance.IsDead;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,8 +71,7 @@ public class Enemy : MonoBehaviour
         MyAnimator = GetComponent<Animator>();
         MyRigidbody = GetComponent<Rigidbody2D>();
         ChangeState(new IdleState());
-
-        }
+    }
 
     // Update is called once per frame
     void Update()
@@ -61,7 +85,7 @@ public class Enemy : MonoBehaviour
 
     private void LookAtTarget()
     {
-        if (Target != null)
+        if (Target != null && !IsTargetDead)
         {
             float xDir = Target.transform.position.x - transform.position.x;
             if (xDir < 0 && facingRight || xDir > 0 && !facingRight)
@@ -103,7 +127,7 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Breath" && !IsDead)
+        if (damageSources.Contains(collision.tag) && !IsDead)
         {
             StartCoroutine(TakeDamage());
         }

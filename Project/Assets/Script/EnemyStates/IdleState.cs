@@ -18,7 +18,7 @@ public class IdleState : IEnemyState
     public void Execute()
     {
         Idle();
-        if (enemy.Target != null)
+        if (enemy.Target != null && !enemy.IsTargetDead)
         {
             enemy.ChangeState(new PatrolState());
         }

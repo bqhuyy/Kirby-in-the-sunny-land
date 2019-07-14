@@ -16,8 +16,11 @@ public class MeleeState : IEnemyState
 
     public void Execute()
     {
-        Attack();
-        if (enemy.Target != null)
+        if (enemy.InRange && !enemy.IsTargetDead)
+        {
+            Attack();
+        }
+        else if (enemy.Target != null && !enemy.IsTargetDead)
         {
             enemy.Move();
         }

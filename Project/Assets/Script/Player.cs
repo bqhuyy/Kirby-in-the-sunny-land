@@ -7,6 +7,17 @@ public class Player : MonoBehaviour
     [SerializeField]
     private Stat health;
 
+    [SerializeField]
+    private List<string> damageSources;
+
+    public bool IsDead
+    {
+        get
+        {
+            return health.CurrentVal <= 0;
+        }
+    }
+
     private void Awake()
     {
         health.Initialize();
@@ -21,13 +32,23 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (damageSources.Contains(collision.tag) && !IsDead)
         {
             health.CurrentVal -= 10;
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            health.CurrentVal += 10;
+            if (!IsDead)
+            {
+                Kirby.Instance.MyAnimator.SetTrigger("damage");
+            }
+            else
+            {
+                Kirby.Instance.MyAnimator.SetTrigger("die");
+                Kirby.Instance.IsDead = true;
+            }
         }
     }
 }
