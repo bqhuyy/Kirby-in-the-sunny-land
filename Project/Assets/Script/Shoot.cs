@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
-public class Breath : MonoBehaviour
+public class Shoot : MonoBehaviour
 {
     [SerializeField]
     private float speed;

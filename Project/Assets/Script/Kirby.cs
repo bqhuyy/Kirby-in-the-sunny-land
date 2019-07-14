@@ -39,12 +39,6 @@ public class Kirby : MonoBehaviour
     [SerializeField]
     private LayerMask groundLayers;
 
-    private string[] monster = new string[] {
-        "UmbrellaOrange",
-        "ElectricOrange",
-        "Sword"
-    };
-
     private float currentY;
 
     [SerializeField]
@@ -173,11 +167,7 @@ public class Kirby : MonoBehaviour
     {
         if (horizontal > 0 && !facingRight || horizontal < 0 && facingRight)
         {
-            facingRight = !facingRight;
-            Vector3 theScale = transform.localScale;
-
-            theScale.x *= -1;
-            transform.localScale = theScale;
+            ChangeDirection();
         }
     }
 
@@ -205,6 +195,11 @@ public class Kirby : MonoBehaviour
     public void Breath(int value)
     {
         GameObject tmp = (GameObject)Instantiate(breathPrefab, transform.position, Quaternion.identity);
+        GameObject sight = GameObject.Find("Sight");
+        if (sight)
+        {
+            Physics2D.IgnoreCollision(tmp.GetComponent<Collider2D>(), sight.GetComponent<Collider2D>());
+        }
         if (facingRight)
         {
             tmp.GetComponent<Breath>().Initialize(Vector2.right);
@@ -221,5 +216,20 @@ public class Kirby : MonoBehaviour
         Fly = false;
         myAnimator.SetBool("flying", false);
         Breath(0);
+    }
+    public Vector2 GetDirection()
+    {
+        return facingRight ? Vector2.right : Vector2.left;
+    }
+
+    public void ChangeDirection()
+    {
+        facingRight = !facingRight;
+        transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+    }
+
+    public IEnumerator TakeDamage()
+    {
+        yield return null;
     }
 }

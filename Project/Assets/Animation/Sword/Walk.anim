@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: IdleWakeUp
+  m_Name: Walk
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,16 +20,16 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 7753769438527130755, guid: 64ca5ce126dbbab4690cc53b21d6a460,
+      value: {fileID: -1855252108904445551, guid: 9b86829a32c0c034693f8a7a1408423b,
         type: 3}
     - time: 0.083333336
-      value: {fileID: 610184587653496200, guid: 64ca5ce126dbbab4690cc53b21d6a460,
+      value: {fileID: -9095020370499111349, guid: 9b86829a32c0c034693f8a7a1408423b,
         type: 3}
     - time: 0.16666667
-      value: {fileID: 981460225025026667, guid: 64ca5ce126dbbab4690cc53b21d6a460,
+      value: {fileID: 3148205967830700137, guid: 9b86829a32c0c034693f8a7a1408423b,
         type: 3}
     - time: 0.25
-      value: {fileID: -8598054205786799746, guid: 64ca5ce126dbbab4690cc53b21d6a460,
+      value: {fileID: -6639602982050279987, guid: 9b86829a32c0c034693f8a7a1408423b,
         type: 3}
     attribute: m_Sprite
     path: 
@@ -50,10 +50,10 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 7753769438527130755, guid: 64ca5ce126dbbab4690cc53b21d6a460, type: 3}
-    - {fileID: 610184587653496200, guid: 64ca5ce126dbbab4690cc53b21d6a460, type: 3}
-    - {fileID: 981460225025026667, guid: 64ca5ce126dbbab4690cc53b21d6a460, type: 3}
-    - {fileID: -8598054205786799746, guid: 64ca5ce126dbbab4690cc53b21d6a460, type: 3}
+    - {fileID: -1855252108904445551, guid: 9b86829a32c0c034693f8a7a1408423b, type: 3}
+    - {fileID: -9095020370499111349, guid: 9b86829a32c0c034693f8a7a1408423b, type: 3}
+    - {fileID: 3148205967830700137, guid: 9b86829a32c0c034693f8a7a1408423b, type: 3}
+    - {fileID: -6639602982050279987, guid: 9b86829a32c0c034693f8a7a1408423b, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
@@ -64,7 +64,7 @@ AnimationClip:
     m_Level: 0
     m_CycleOffset: 0
     m_HasAdditiveReferencePose: 0
-    m_LoopTime: 0
+    m_LoopTime: 1
     m_LoopBlend: 0
     m_LoopBlendOrientation: 0
     m_LoopBlendPositionY: 0
