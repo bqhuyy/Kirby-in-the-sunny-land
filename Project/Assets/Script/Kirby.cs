@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public delegate void DeadEventHandler();
+
 public class Kirby : MonoBehaviour
 {
     private static Kirby instance;
+    public event DeadEventHandler Dead;
     public static Kirby Instance { get => (instance) ? instance : GameObject.FindObjectOfType<Kirby>(); }
     public Animator MyAnimator { get; set; }
     public float MovementSpeed { get; set; }
@@ -49,7 +52,32 @@ public class Kirby : MonoBehaviour
     [SerializeField]
     private AudioSource jumpSound;
 
-    public bool IsDead { get; set; }
+    public bool IsDead
+    {
+        get
+        {
+            if (health.CurrentVal <= 0)
+            {
+                OnDead();
+            }
+            return health.CurrentVal <= 0;
+        }
+    }
+
+    [SerializeField]
+    private Stat health;
+
+    [SerializeField]
+    private List<string> damageSources;
+
+    private bool immortal = false;
+    [SerializeField]
+    private float immortalTime;
+
+    private void Awake()
+    {
+        health.Initialize();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -244,11 +272,52 @@ public class Kirby : MonoBehaviour
 
     public IEnumerator TakeDamage()
     {
-        yield return null;
+        if (!immortal)
+        {
+            health.CurrentVal -= 10;
+            if (!IsDead)
+            {
+                MyAnimator.SetTrigger("damage");
+                immortal = true;
+                StartCoroutine(IndicateImmortal());
+                yield return new WaitForSeconds(immortalTime);
+                immortal = false;
+            }
+            else
+            {
+                MyAnimator.SetLayerWeight(1, 0);
+                MyAnimator.SetTrigger("die");
+            }
+        }
     }
 
     public void AbsorbAttack()
     {
         AbsorbCollider.enabled = !AbsorbCollider.enabled;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (damageSources.Contains(collision.tag) && !IsDead)
+        {
+            StartCoroutine(TakeDamage());
+        }
+    }
+    private IEnumerator IndicateImmortal()
+    {
+        while (immortal)
+        {
+            GetComponent<SpriteRenderer>().enabled = false;
+            yield return new WaitForSeconds(.1f);
+            GetComponent<SpriteRenderer>().enabled = true;
+            yield return new WaitForSeconds(.1f);
+        }
+    }
+    public void OnDead()
+    {
+        if (Dead != null)
+        {
+            Dead();
+        }
     }
 }

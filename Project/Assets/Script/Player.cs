@@ -18,6 +18,12 @@ public class Player : MonoBehaviour
         }
     }
 
+    private bool immortal = false;
+    [SerializeField]
+    private float immortalTime;
+
+    private float immortalCounter = 0;
+
     private void Awake()
     {
         health.Initialize();
@@ -32,23 +38,51 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        BecomeImmortal();
     }
 
+    private void BecomeImmortal()
+    {
+        if (immortalCounter > 0.01)
+        {
+            StartCoroutine(IndicateImmortal());
+            immortalCounter -= Time.deltaTime;
+        }
+        else
+        {
+            immortal = false;
+        }
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (damageSources.Contains(collision.tag) && !IsDead)
         {
-            health.CurrentVal -= 10;
-            if (!IsDead)
+            if (!immortal)
             {
-                Kirby.Instance.MyAnimator.SetTrigger("damage");
+                health.CurrentVal -= 10;
+                if (!IsDead)
+                {
+                    Kirby.Instance.MyAnimator.SetTrigger("damage");
+                    immortal = true;
+                    immortalCounter = immortalTime;
+                }
+                else
+                {
+                    Kirby.Instance.MyAnimator.SetTrigger("die");
+                    //Kirby.Instance.IsDead = true;
+                }
             }
-            else
-            {
-                Kirby.Instance.MyAnimator.SetTrigger("die");
-                Kirby.Instance.IsDead = true;
-            }
+        }
+    }
+
+    private IEnumerator IndicateImmortal()
+    {
+        while (immortal)
+        {
+            Kirby.Instance.GetComponent<SpriteRenderer>().enabled = false;
+            yield return new WaitForSeconds(.1f);
+            Kirby.Instance.GetComponent<SpriteRenderer>().enabled = true;
+            yield return new WaitForSeconds(.1f);
         }
     }
 }

@@ -20,7 +20,7 @@ public class PatrolState : IEnemyState
     {
         Patrol();
         enemy.Move();
-        if (enemy.Target != null && !enemy.IsTargetDead && enemy.InRange)
+        if (enemy.Target != null && enemy.InRange)
         {
             enemy.ChangeState(new MeleeState());
         }
@@ -33,7 +33,6 @@ public class PatrolState : IEnemyState
 
     public void OnTriggerEnter(Collider2D other)
     {
-        Debug.Log(other);
         if (other.tag == "Edge")
         {
             enemy.ChangeDirection();

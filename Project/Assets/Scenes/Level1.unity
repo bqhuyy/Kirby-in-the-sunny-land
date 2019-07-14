@@ -1841,7 +1841,6 @@ GameObject:
   - component: {fileID: 1626589292}
   - component: {fileID: 1626589293}
   - component: {fileID: 1626589295}
-  - component: {fileID: 1626589294}
   m_Layer: 0
   m_Name: Kirby
   m_TagString: Player
@@ -1970,24 +1969,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: -0.00017750263}
   serializedVersion: 2
   m_Radius: 0.085933745
---- !u!114 &1626589294
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1626589287}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2129fefa5fa87a34791d93bb3802f889, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health:
-    bar: {fileID: 766269346}
-    maxVal: 100
-    currentVal: 100
-  damageSources:
-  - EnemyAttack
 --- !u!114 &1626589295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2013,6 +1994,13 @@ MonoBehaviour:
     type: 3}
   AbsorbCollider: {fileID: 536660648}
   jumpSound: {fileID: 129265350}
+  health:
+    bar: {fileID: 766269346}
+    maxVal: 100
+    currentVal: 100
+  damageSources:
+  - EnemyAttack
+  immortalTime: 3
 --- !u!1001 &1635564949
 PrefabInstance:
   m_ObjectHideFlags: 0

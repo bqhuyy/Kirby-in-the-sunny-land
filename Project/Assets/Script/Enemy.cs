@@ -71,6 +71,7 @@ public class Enemy : MonoBehaviour
         MyAnimator = GetComponent<Animator>();
         MyRigidbody = GetComponent<Rigidbody2D>();
         ChangeState(new IdleState());
+        Kirby.Instance.Dead += new DeadEventHandler(RemoveTarget);
     }
 
     // Update is called once per frame
@@ -81,6 +82,12 @@ public class Enemy : MonoBehaviour
             currentState.Execute();
             LookAtTarget();
         }
+    }
+
+    public void RemoveTarget()
+    {
+        Target = null;
+        ChangeState(new PatrolState());
     }
 
     private void LookAtTarget()
