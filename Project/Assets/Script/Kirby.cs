@@ -90,7 +90,7 @@ public class Kirby : MonoBehaviour
 
     void Update()
     {
-        if (gameObject && !IsDead)
+        if (gameObject && !IsDead && !PauseMenu.GameIsPause)
         {
             OnGround = IsGrounded();
             HandleInput();
