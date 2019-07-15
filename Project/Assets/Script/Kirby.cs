@@ -79,6 +79,8 @@ public class Kirby : MonoBehaviour
         health.Initialize();
     }
 
+    public bool isWin { get; set; }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -86,6 +88,7 @@ public class Kirby : MonoBehaviour
         MyRigidbody = GetComponent<Rigidbody2D>();
         MyAnimator = GetComponent<Animator>();
         MovementSpeed = walkSpeed;
+        isWin = false;
     }
 
     void Update()
@@ -270,11 +273,11 @@ public class Kirby : MonoBehaviour
         transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
     }
 
-    public IEnumerator TakeDamage()
+    public IEnumerator TakeDamage(float value)
     {
         if (!immortal)
         {
-            health.CurrentVal -= 10;
+            health.CurrentVal -= value;
             if (!IsDead)
             {
                 MyAnimator.SetTrigger("damage");
@@ -300,7 +303,15 @@ public class Kirby : MonoBehaviour
     {
         if (damageSources.Contains(collision.tag) && !IsDead)
         {
-            StartCoroutine(TakeDamage());
+            StartCoroutine(TakeDamage(10));
+        }
+        if (collision.tag == "Deadzone")
+        {
+            StartCoroutine(TakeDamage(health.CurrentVal));
+        }
+        if (collision.tag == "Exit")
+        {
+            isWin = true;
         }
     }
     private IEnumerator IndicateImmortal()

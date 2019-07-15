@@ -10,10 +10,13 @@ public class PauseMenu : MonoBehaviour
     [SerializeField]
     private GameObject pauseMenuUI;
 
+    [SerializeField]
+    private GameObject replayMenuUI;
+
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !Kirby.Instance.IsDead)
         {
             if (GameIsPause)
             {

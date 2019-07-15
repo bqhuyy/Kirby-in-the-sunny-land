@@ -10,7 +10,6 @@ public class PatrolState : IEnemyState
 
     private float patrolDuration = 10;
 
-
     public void Enter(Enemy enemy)
     {
         this.enemy = enemy;

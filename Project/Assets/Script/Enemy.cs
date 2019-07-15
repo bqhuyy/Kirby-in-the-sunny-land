@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float movementSpeed;
 
-    private bool facingRight;
+    public bool FacingRight { get; set; }
 
     public bool Attack { get; set; }
 
@@ -56,18 +56,11 @@ public class Enemy : MonoBehaviour
             return false;
         }
     }
-    public bool IsTargetDead
-    {
-        get
-        {
-            return Kirby.Instance.IsDead;
-        }
-    }
 
     // Start is called before the first frame update
     void Start()
     {
-        facingRight = false;
+        FacingRight = false;
         MyAnimator = GetComponent<Animator>();
         MyRigidbody = GetComponent<Rigidbody2D>();
         ChangeState(new IdleState());
@@ -75,7 +68,7 @@ public class Enemy : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (!IsDead)
         {
@@ -92,10 +85,10 @@ public class Enemy : MonoBehaviour
 
     private void LookAtTarget()
     {
-        if (Target != null && !IsTargetDead)
+        if (Target != null)
         {
             float xDir = Target.transform.position.x - transform.position.x;
-            if (xDir < 0 && facingRight || xDir > 0 && !facingRight)
+            if (xDir < 0 && FacingRight || xDir > 0 && !FacingRight)
             {
                 ChangeDirection();
             }
@@ -104,7 +97,7 @@ public class Enemy : MonoBehaviour
 
     public void ChangeDirection()
     {
-        facingRight = !facingRight;
+        FacingRight = !FacingRight;
         transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
     }
 
@@ -129,7 +122,7 @@ public class Enemy : MonoBehaviour
 
     public Vector2 GetDirection()
     {
-        return facingRight ? Vector2.right : Vector2.left;
+        return FacingRight ? Vector2.right : Vector2.left;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -151,7 +144,7 @@ public class Enemy : MonoBehaviour
 
     private void Shoot(int value)
     {
-        if (facingRight)
+        if (FacingRight)
         {
             GameObject tmp = (GameObject)Instantiate(shootPrefab, shootPos.position, Quaternion.Euler(new Vector3(0, 0, 180)));
             tmp.GetComponent<Shoot>().Initialize(Vector2.right);

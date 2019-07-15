@@ -9,6 +9,8 @@ TagManager:
   - EnemyAttack
   - Attack
   - Enemy
+  - Deadzone
+  - Exit
   layers:
   - Default
   - TransparentFX
