@@ -294,6 +294,11 @@ public class Kirby : MonoBehaviour
         }
     }
 
+    public void IncreaseHealth(float value)
+    {
+        health.CurrentVal += value;
+    }
+
     public void AbsorbAttack()
     {
         AbsorbCollider.enabled = !AbsorbCollider.enabled;
