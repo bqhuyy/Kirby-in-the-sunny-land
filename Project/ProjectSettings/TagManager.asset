@@ -58,3 +58,6 @@ TagManager:
   - name: Creature
     uniqueID: 2965139569
     locked: 0
+  - name: Instruction
+    uniqueID: 4281158869
+    locked: 0

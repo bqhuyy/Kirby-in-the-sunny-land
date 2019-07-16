@@ -18,7 +18,8 @@ public class ReplayMenu : MonoBehaviour
     {
         if (Kirby.Instance.isWin)
         {
-            Pause();
+            replayMenuUI.SetActive(true);
+            Time.timeScale = 0;
         }
     }
 
@@ -40,10 +41,10 @@ public class ReplayMenu : MonoBehaviour
         Time.timeScale = 0;
     }
 
-    public void LoadMenu()
+    public void SelectLevel()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene("StartMenu");
+        SceneManager.LoadScene("LevelManagement");
     }
 
     public void QuitGame()
