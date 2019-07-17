@@ -18,7 +18,7 @@ public class ReplayMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Kirby.Instance.IsDead && !GameIsPause)
+        if ((Kirby.Instance.IsDead || Kirby.Instance.IsWin) && !GameIsPause)
         {
             Pause();
         }

@@ -79,7 +79,7 @@ public class Kirby : MonoBehaviour
         health.Initialize();
     }
 
-    public bool isWin { get; set; }
+    public bool IsWin { get; set; }
 
     // Start is called before the first frame update
     void Start()
@@ -88,7 +88,7 @@ public class Kirby : MonoBehaviour
         MyRigidbody = GetComponent<Rigidbody2D>();
         MyAnimator = GetComponent<Animator>();
         MovementSpeed = walkSpeed;
-        isWin = false;
+        IsWin = false;
     }
 
     void Update()
@@ -317,7 +317,7 @@ public class Kirby : MonoBehaviour
         }
         if (collision.tag == "Exit")
         {
-            isWin = true;
+            IsWin = true;
         }
     }
     private IEnumerator IndicateImmortal()
