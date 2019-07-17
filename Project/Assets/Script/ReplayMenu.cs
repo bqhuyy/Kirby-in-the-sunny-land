@@ -6,49 +6,45 @@ using UnityEngine.SceneManagement;
 public class ReplayMenu : MonoBehaviour
 {
     [SerializeField]
+    private SceneFader fader;
+
+    [SerializeField]
     private GameObject replayMenuUI;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        Kirby.Instance.Dead += new DeadEventHandler(Pause);
-    }
+    private bool GameIsPause = false;
 
-    private void Update()
+    const string LevelSelector = "LevelManagement";
+
+    // Update is called once per frame
+    void Update()
     {
-        if (Kirby.Instance.isWin)
+        if (Kirby.Instance.IsDead && !GameIsPause)
         {
-            replayMenuUI.SetActive(true);
-            Time.timeScale = 0;
+            Pause();
         }
-    }
-
-    public void Replay()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void Pause()
     {
-        StartCoroutine(ShowReplay());
-    }
-
-    IEnumerator ShowReplay()
-    {
-        yield return new WaitForSeconds(1.0f);
         replayMenuUI.SetActive(true);
         Time.timeScale = 0;
+        GameIsPause = true;
     }
 
     public void SelectLevel()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene("LevelManagement");
+        fader.FadeTo(LevelSelector);
     }
 
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void Replay()
+    {
+        Time.timeScale = 1;
+        fader.FadeTo(SceneManager.GetActiveScene().name);
     }
 }
