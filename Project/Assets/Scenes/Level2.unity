@@ -3474,8 +3474,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0efc912ffa64e149922a4699982520b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fader: {fileID: 1635564950}
   pauseMenuUI: {fileID: 1406460846}
-  replayMenuUI: {fileID: 0}
 --- !u!114 &1154185073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4415,6 +4415,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 622017a8ba84a9e47929923368884007, type: 3}
+--- !u!114 &1635564950 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1143031438668413218, guid: 622017a8ba84a9e47929923368884007,
+    type: 3}
+  m_PrefabInstance: {fileID: 1635564949}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18a6597bfbe063c409bf0321b2f37295, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1740742723
 GameObject:
   m_ObjectHideFlags: 0

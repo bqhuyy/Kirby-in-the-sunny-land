@@ -93,11 +93,12 @@ public class Kirby : MonoBehaviour
 
     void Update()
     {
-        if (gameObject && !IsDead && !PauseMenu.GameIsPause)
+        if (gameObject && !IsDead && Time.timeScale != 0)
         {
             OnGround = IsGrounded();
             HandleInput();
         }
+        
     }
 
     // Update is called once per frame

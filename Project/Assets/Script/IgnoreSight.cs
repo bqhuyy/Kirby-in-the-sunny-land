@@ -5,7 +5,7 @@ using UnityEngine;
 public class IgnoreSight : MonoBehaviour
 {
     // Start is called before the first frame update
-    void Start()
+    void FixedUpdate()
     {
         GameObject[] sight = GameObject.FindGameObjectsWithTag("Sight");
         if (sight.Length > 0)

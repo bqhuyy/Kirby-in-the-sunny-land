@@ -5,13 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    public static bool GameIsPause = false;
+    private bool GameIsPause = false;
+
+    [SerializeField]
+    private SceneFader fader;
 
     [SerializeField]
     private GameObject pauseMenuUI;
 
-    [SerializeField]
-    private GameObject replayMenuUI;
+    const string StartMenu = "StartMenu";
 
     // Update is called once per frame
     void Update()
@@ -46,7 +48,7 @@ public class PauseMenu : MonoBehaviour
     public void LoadMenu()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene("StartMenu");
+        fader.FadeTo(StartMenu);
     }
 
     public void QuitGame()
