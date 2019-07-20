@@ -2,6 +2,8 @@
 
 ## Intruction
 Kirby is an imagination creature which has special magic - transform to anything Kirby eats. In this game, Kirby discovers new world - SunnyLand - which is more realistic not magical any more. Kirby must overcomes all challenges to win.
+
+![Poster](https://github.com/bqhuyy/1651076/blob/master/Marketing/poster.png?raw=true)
 ## Requirement
 * Unity version: Unity 2019.1.4f1 (64-bit)
 * WebGL
