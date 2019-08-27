@@ -27,6 +27,6 @@ Kirby is an imagination creature which has special magic - transform to anything
 
 ***Note***: This is for **educational purposes** only.
 
-[0]: https://github.com/bqhuyy/1651076
-[1]: https://bqhuyy.github.io/1651076/Build/Web/index.html
+[0]: https://github.com/bqhuyy
+[1]: https://bqhuyy.github.io/Kirby-in-the-sunny-land/Build/Web/index.html
 [2]: https://drive.google.com/file/d/1zZZkQAS0ZuXDtRDFrsqys95giDjeCocN/view
